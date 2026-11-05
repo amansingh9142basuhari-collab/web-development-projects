@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple fashion shopping page concept inspired by Myntra.">
+    <title>Myntra | Fashion, Fresh Finds</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #282c3f;
+            --muted: #696b79;
+            --line: #e9e9ed;
+            --pink: #ff3f6c;
+            --page: #fff;
+            --content-width: 1280px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--page);
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        .site-header {
+            position: sticky;
+            z-index: 5;
+            top: 0;
+            display: flex;
+            min-height: 76px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 12px max(5%, calc((100% - var(--content-width)) / 2));
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 3px 12px rgba(40, 44, 63, 0.04);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--ink);
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 36px;
+            height: 36px;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(140deg, #ff8c43, #ff3f6c 55%, #8b45d1);
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+
+        .category-nav {
+            display: flex;
+            align-items: center;
+            gap: clamp(12px, 2vw, 28px);
+        }
+
+        .category-nav a {
+            padding: 16px 0 13px;
+            border-bottom: 3px solid transparent;
+            font-size: 0.76rem;
+            font-weight: 750;
+            letter-spacing: 0.04em;
+        }
+
+        .category-nav a:hover,
+        .category-nav a:focus-visible {
+            border-bottom-color: var(--pink);
+        }
+
+        .category-nav .sale-link {
+            color: var(--pink);
+        }
+
+        .search {
+            display: flex;
+            width: min(27vw, 340px);
+            align-items: center;
+            gap: 9px;
+            padding: 10px 13px;
+            border: 1px solid #f1f1f4;
+            border-radius: 5px;
+            background: #f5f5f6;
+            color: var(--muted);
+        }
+
+        .search input {
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--ink);
+            font-size: 0.82rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 19px;
+        }
+
+        .header-action {
+            display: grid;
+            justify-items: center;
+            gap: 2px;
+            font-size: 1.05rem;
+        }
+
+        .header-action small {
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+
+        .hero {
+            width: min(var(--content-width), calc(100% - 48px));
+            min-height: 345px;
+            margin: 30px auto 0;
+            padding: clamp(30px, 6vw, 74px);
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 82% 18%, rgba(255, 255, 255, 0.8), transparent 25%),
+                linear-gradient(110deg, #fff0e8 0%, #ffe1ea 50%, #eadfff 100%);
+        }
+
+        .hero-copy {
+            max-width: 540px;
+        }
+
+        .eyebrow {
+            margin: 0 0 14px;
+            color: var(--pink);
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(2.4rem, 6vw, 4.7rem);
+            letter-spacing: -0.06em;
+            line-height: 0.98;
+        }
+
+        .hero-copy > p:not(.eyebrow) {
+            max-width: 420px;
+            margin: 19px 0 25px;
+            color: #565768;
+            font-size: 1.02rem;
+            line-height: 1.65;
+        }
+
+        .shop-link {
+            display: inline-block;
+            padding: 13px 20px;
+            border-radius: 4px;
+            background: var(--ink);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 750;
+            letter-spacing: 0.06em;
+        }
+
+        .shop-link:hover {
+            background: var(--pink);
+        }
+
+        .hero-note {
+            display: inline-block;
+            margin-left: 12px;
+            color: #555568;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .section {
+            width: min(var(--content-width), calc(100% - 48px));
+            margin: 48px auto;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            letter-spacing: 0.08em;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .category-card {
+            display: flex;
+            min-height: 130px;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 19px;
+            border-radius: 6px;
+            color: var(--ink);
+            transition: transform 160ms ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .category-card span {
+            margin-bottom: 6px;
+            font-size: 1.35rem;
+        }
+
+        .category-card strong {
+            font-size: 1.02rem;
+        }
+
+        .category-card small {
+            margin-top: 4px;
+            color: var(--muted);
+        }
+
+        .category-card:nth-child(1) { background: #fff0ed; }
+        .category-card:nth-child(2) { background: #fff5dc; }
+        .category-card:nth-child(3) { background: #eef0ff; }
+        .category-card:nth-child(4) { background: #e9f8f3; }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .product-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid #f0f0f2;
+            border-radius: 5px;
+            background: white;
+            transition: box-shadow 160ms ease, transform 160ms ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(40, 44, 63, 0.1);
+        }
+
+        .product-image {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            background: #f5f5f6;
+        }
+
+        .product-info {
+            padding: 14px;
+        }
+
+        .product-info h3 {
+            margin: 0 0 5px;
+            overflow: hidden;
+            font-size: 0.94rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .product-info p {
+            margin: 0 0 10px;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .price {
+            font-size: 0.86rem;
+            font-weight: 750;
+        }
+
+        .old-price {
+            margin-left: 5px;
+            color: #9495a0;
+            font-size: 0.77rem;
+            font-weight: 400;
+            text-decoration: line-through;
+        }
+
+        .discount {
+            margin-left: 5px;
+            color: #ff905a;
+            font-size: 0.75rem;
+        }
+
+        .add-button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px;
+            border: 1px solid #d5d6dc;
+            border-radius: 4px;
+            background: white;
+            color: var(--ink);
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-weight: 750;
+        }
+
+        .add-button:hover,
+        .add-button:focus-visible {
+            border-color: var(--pink);
+            color: var(--pink);
+        }
+
+        .site-footer {
+            margin-top: 56px;
+            padding: 28px 24px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.82rem;
+        }
+
+        .site-footer p {
+            margin: 5px;
+        }
+
+        @media (max-width: 980px) {
+            .site-header {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px 20px;
+                padding-inline: 20px;
+            }
+
+            .category-nav {
+                order: 2;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .search {
+                width: min(40vw, 300px);
+            }
+        }
+
+        @media (max-width: 620px) {
+            .site-header {
+                gap: 12px;
+                padding: 12px 16px;
+            }
+
+            .brand {
+                margin-right: auto;
+            }
+
+            .search {
+                order: 3;
+                width: 100%;
+            }
+
+            .header-actions {
+                gap: 12px;
+            }
+
+            .category-nav {
+                justify-content: flex-start;
+                gap: 19px;
+                overflow-x: auto;
+            }
+
+            .category-nav a {
+                flex: 0 0 auto;
+                font-size: 0.69rem;
+            }
+
+            .hero,
+            .section {
+                width: calc(100% - 32px);
+            }
+
+            .hero {
+                min-height: 310px;
+                margin-top: 16px;
+                padding: 30px 24px;
+            }
+
+            .hero-note {
+                display: block;
+                margin: 13px 0 0;
+            }
+
+            .section {
+                margin-block: 36px;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .category-card {
+                min-height: 112px;
+                padding: 14px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 11px;
+            }
+
+            .product-info {
+                padding: 11px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="#" aria-label="Myntra home">
+            <span class="brand-mark" aria-hidden="true">M</span>
+            <span>MYNTRA</span>
+        </a>
+
+        <nav class="category-nav" aria-label="Shop categories">
+            <a href="#products">MEN</a>
+            <a href="#products">WOMEN</a>
+            <a href="#products">KIDS</a>
+            <a href="#categories">HOME</a>
+            <a class="sale-link" href="#products">SALE</a>
+        </nav>
+
+        <label class="search">
+            <span aria-hidden="true">⌕</span>
+            <input type="search" placeholder="Search for products, brands and more" aria-label="Search products">
+        </label>
+
+        <div class="header-actions">
+            <a class="header-action" href="#categories" aria-label="Profile">
+                <span aria-hidden="true">♙</span><small>Profile</small>
+            </a>
+            <a class="header-action" href="#products" aria-label="Wishlist">
+                <span aria-hidden="true">♡</span><small>Wishlist</small>
+            </a>
+            <a class="header-action" href="#products" aria-label="Shopping bag">
+                <span aria-hidden="true">♧</span><small>Bag <span id="bag-count">0</span></small>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <p class="eyebrow">THE NEW SEASON EDIT</p>
+                <h1 id="hero-title">A little more you.</h1>
+                <p>Fresh fits, feel-good colors, and everyday favorites. Find your next look right here.</p>
+                <a class="shop-link" href="#products">SHOP THE EDIT &rarr;</a>
+                <span class="hero-note">NEW STYLES, JUST DROPPED</span>
+            </div>
+        </section>
+
+        <section class="section" id="categories" aria-labelledby="category-title">
+            <div class="section-heading">
+                <h2 id="category-title">SHOP BY CATEGORY</h2>
+                <p>A good outfit starts with a good find.</p>
+            </div>
+            <div class="category-grid">
+                <a class="category-card" href="#products">
+                    <span aria-hidden="true">👕</span>
+                    <strong>Everyday wear</strong>
+                    <small>Easy, all-day comfort</small>
+                </a>
+                <a class="category-card" href="#products">
+                    <span aria-hidden="true">👗</span>
+                    <strong>Going-out looks</strong>
+                    <small>Make an entrance</small>
+                </a>
+                <a class="category-card" href="#products">
+                    <span aria-hidden="true">👟</span>
+                    <strong>Sneaker season</strong>
+                    <small>Step out in style</small>
+                </a>
+                <a class="category-card" href="#products">
+                    <span aria-hidden="true">👜</span>
+                    <strong>Finishing touches</strong>
+                    <small>It's all in the details</small>
+                </a>
+            </div>
+        </section>
+
+        <section class="section" id="products" aria-labelledby="product-title">
+            <div class="section-heading">
+                <h2 id="product-title">GOOD FINDS, GREAT PRICES</h2>
+                <p>Some new favorites for your wardrobe.</p>
+            </div>
+            <div class="product-grid">
+                <article class="product-card">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&amp;fit=crop&amp;w=650&amp;q=80" alt="Casual jacket styled for an everyday look" loading="lazy">
+                    <div class="product-info">
+                        <h3>Northstar</h3>
+                        <p>Relaxed Fit Casual Jacket</p>
+                        <span class="price">₹1,499</span><span class="old-price">₹2,999</span><span class="discount">50% OFF</span>
+                        <button class="add-button" type="button">ADD TO BAG</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&amp;fit=crop&amp;w=650&amp;q=80" alt="Colorful outfit and fashion accessories" loading="lazy">
+                    <div class="product-info">
+                        <h3>Studio West</h3>
+                        <p>Printed Everyday Dress</p>
+                        <span class="price">₹1,199</span><span class="old-price">₹1,999</span><span class="discount">40% OFF</span>
+                        <button class="add-button" type="button">ADD TO BAG</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1529139574466-a303027c1d8?auto=format&amp;fit=crop&amp;w=650&amp;q=80" alt="Modern streetwear look" loading="lazy">
+                    <div class="product-info">
+                        <h3>Urban Rhythm</h3>
+                        <p>Classic Streetwear Outfit</p>
+                        <span class="price">₹1,799</span><span class="old-price">₹3,599</span><span class="discount">50% OFF</span>
+                        <button class="add-button" type="button">ADD TO BAG</button>
+                    </div>
+                </article>
+                <article class="product-card">
+                    <img class="product-image" src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&amp;fit=crop&amp;w=650&amp;q=80" alt="Smart casual leather jacket" loading="lazy">
+                    <div class="product-info">
+                        <h3>Roadster</h3>
+                        <p>Smart Casual Jacket</p>
+                        <span class="price">₹2,199</span><span class="old-price">₹3,999</span><span class="discount">45% OFF</span>
+                        <button class="add-button" type="button">ADD TO BAG</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>Made for a little everyday style.</p>
+        <p>This is a student-made shopping page concept, not a live store.</p>
+    </footer>
+
+    <script>
+        const bagCount = document.querySelector("#bag-count");
+
+        document.querySelectorAll(".add-button").forEach((button) => {
+            button.addEventListener("click", () => {
+                bagCount.textContent = String(Number(bagCount.textContent) + 1);
+                button.textContent = "ADDED TO BAG";
+                button.setAttribute("aria-label", "Added to bag");
+            });
+        });
+    </script>
+</body>
+</html>
